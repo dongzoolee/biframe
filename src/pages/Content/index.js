@@ -1,6 +1,19 @@
-import { printLine } from './modules/print';
+const targetNode = document.body;
 
-console.log('Content script works!');
-console.log('Must reload extension for modifications to take effect.');
+targetNode?.addEventListener('DOMNodeInserted', ({ target }) => {
+  if (target.nodeName === 'IFRAME') {
+    chrome.runtime.sendMessage({ action: 'changeIcon', value: false });
+    target.style.display = 'none';
+    console.log('Found an iframe and was hided');
+  }
+});
 
-printLine("Using the 'printLine' function from the Print Module");
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'toggleIframe') {
+    const iframe = document.querySelector('iframe');
+    if (iframe) {
+      iframe.style.display = message.value ? 'block' : 'none';
+    }
+  }
+  sendResponse({ status: 'ok' });
+});
