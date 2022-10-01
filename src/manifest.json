@@ -1,15 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "Chrome Extension with React & Webpack",
-  "description": "A chrome extension boilerplate built with React 17, Webpack 5, and Webpack Dev Server 4",
+  "name": "biframe",
+  "description": "Chrome extension: Force closes react-error-overlay's `Failed to compile` iframe",
   "options_page": "options.html",
   "background": { "service_worker": "background.bundle.js" },
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": "icon-34.png"
+    "default_icon": "lgtm-true.png"
   },
   "icons": {
-    "128": "icon-128.png"
+    "128": "lgtm-true.png"
   },
   "content_scripts": [
     {
@@ -18,11 +17,19 @@
       "css": ["content.styles.css"]
     }
   ],
-  "devtools_page": "devtools.html",
   "web_accessible_resources": [
     {
       "resources": ["content.styles.css", "icon-128.png", "icon-34.png"],
       "matches": []
     }
-  ]
+  ],
+  "permissions": ["storage"],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E",
+        "mac": "Command+Shift+E"
+      }
+    }
+  }
 }
